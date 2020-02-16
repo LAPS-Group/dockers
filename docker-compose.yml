@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  notebook:
+    build: pathfinding/
+    image: mldev
+    ports:
+      - "8888:8888"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - pathfinding:/workspace
+    links:
+      - redis
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    volumes:
+      - database:/data
+volumes:
+  pathfinding:
+    driver: local
+    external: true
+  database:
+    driver: local
