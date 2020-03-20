@@ -6,10 +6,21 @@ matplotlib
 scipy
 noise
 Pillow
+pandas
+torch-sparse
+torch-geometric
+
+gym
+-e git+https://github.com/LAPS-Group/gym-drone.git#egg=gym-drone
 
 coremltools
 
 torch
+torchvision
 onnx
 onnxmltools
 onnxruntime
+
+scikit-image
+jupyter-tensorboard
+tensorflow

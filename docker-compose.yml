@@ -1,25 +1,52 @@
 version: '3.7'
 services:
-  notebook:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+  notebook1:
     build: pathfinding/
     image: mldev
+    shm_size: '15gb'
     ports:
-      - "8888:8888"
+      - "7753:7753"
     environment:
+      - PORT=7753
       - NVIDIA_VISIBLE_DEVICES=all
+      - VIRTUAL_HOST=laps_notebook1.server
     volumes:
-      - pathfinding:/workspace
+      - notebook1:/workspace
+    links:
+      - redis
+  notebook2:
+    image: mldev
+    shm_size: '15gb'
+    ports:
+      - "7754:7754"
+    environment:
+      - PORT=7754
+      - NVIDIA_VISIBLE_DEVICES=all
+      - VIRTUAL_HOST=laps_notebook2.server
+    volumes:
+      - notebook2:/workspace
     links:
       - redis
   redis:
-    image: "redis:latest"
+    build: redis/
+    image: laps-redis
     ports:
       - "6379:6379"
+    expose:
+      - "6379"
     volumes:
       - database:/data
+
 volumes:
-  pathfinding:
+  notebook1:
     driver: local
-    external: true
+  notebook2:
+    driver: local
   database:
     driver: local

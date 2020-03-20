@@ -4,15 +4,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	python3.6 python3-pip \
 	python3-dev git \
 	python3-setuptools
-RUN pip3 install --upgrade pip
 
 COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
-RUN rm requirements.txt
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install --no-cache-dir -r requirements.txt --src /usr/local/src
 
 WORKDIR /workspace
 
-EXPOSE 8888
+EXPOSE ${PORT}
 
 # Launch Jupyter notebook
-CMD ["jupyter", "notebook", "--allow-root", "--port=8888", "--ip=0.0.0.0", "--no-browser"]
+CMD jupyter notebook --allow-root --port=${PORT} --ip=0.0.0.0 --no-browser
