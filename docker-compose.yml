@@ -11,11 +11,11 @@ services:
     image: mldev
     shm_size: '15gb'
     ports:
-      - "7753:7753"
+      - "8881:8881"
     environment:
-      - PORT=7753
+      - PORT=8881
       - NVIDIA_VISIBLE_DEVICES=all
-      - VIRTUAL_HOST=laps_notebook1.server
+      - VIRTUAL_HOST=notebook1.laps.website
     volumes:
       - notebook1:/workspace
     links:
@@ -24,11 +24,11 @@ services:
     image: mldev
     shm_size: '15gb'
     ports:
-      - "7754:7754"
+      - "8882:8882"
     environment:
-      - PORT=7754
+      - PORT=8882
       - NVIDIA_VISIBLE_DEVICES=all
-      - VIRTUAL_HOST=laps_notebook2.server
+      - VIRTUAL_HOST=notebook2.laps.website
     volumes:
       - notebook2:/workspace
     links:
@@ -43,10 +43,28 @@ services:
     volumes:
       - database:/data
 
+  # For Jan og andre
+  notebook3:
+    image: mldev
+    shm_size: '15gb'
+    ports:
+      - "8883:8883"
+    environment:
+      - PORT=8883
+      - NVIDIA_VISIBLE_DEVICES=all
+      - VIRTUAL_HOST=notebook3.laps.website
+    volumes:
+      - notebook3:/workspace
+    links:
+      - redis
+
+
 volumes:
   notebook1:
     driver: local
   notebook2:
+    driver: local
+  notebook3:
     driver: local
   database:
     driver: local

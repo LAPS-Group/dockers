@@ -1,5 +1,6 @@
 numpy
 jupyter
+jupyterlab
 redis
 opencv-python
 matplotlib
@@ -7,7 +8,6 @@ scipy
 noise
 Pillow
 pandas
-torch-sparse
 torch-geometric
 
 gym
